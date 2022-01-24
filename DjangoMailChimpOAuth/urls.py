@@ -19,6 +19,7 @@ from MailChimp.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('oauth/mailchimp/callback', index, name="index"),
+    path('', index, name="index"),
+    path('oauth/mailchimp/callback', callback, name="callback"),
     path('/auth/mailchimp', auth, name="auth")
 ]

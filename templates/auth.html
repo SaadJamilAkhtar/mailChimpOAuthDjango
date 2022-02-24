@@ -5,7 +5,11 @@
     <title>Reply</title>
 </head>
 <body>
-    token : {{ token }}
-    server : {{ server }}
+token : {{ token }}
+server : {{ server }}
+
+{% for com in campaigns %}
+    {{ com }}
+{% endfor %}
 </body>
 </html>

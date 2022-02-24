@@ -4,6 +4,9 @@ import requests
 from django.shortcuts import render, redirect
 from .models import *
 
+import mailchimp_marketing as MailchimpMarketing
+from mailchimp_marketing.api_client import ApiClientError
+
 
 def index(request):
     return render(request, "index.html")
@@ -42,4 +45,20 @@ def callback(request):
         "token": token.token,
         "server": token.server
     }
+
+    data['campaigns'] = getData(data)
     return render(request, 'auth.html', data)
+
+
+def getData(data):
+    try:
+        client = MailchimpMarketing.Client()
+        client.set_config({
+            "access_token": data["token"],
+            "server": data["server"]
+        })
+        response = client.campaigns.list()
+        return response['campaigns']
+    except ApiClientError as error:
+        print("Error: {}".format(error.text))
+    return null
